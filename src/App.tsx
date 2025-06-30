@@ -1,26 +1,24 @@
+// src/App.tsx
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './componentes/navbar'
+import Home from './paginas/home';
+import Clientes from './paginas/clientes';
+import Pets from './paginas/pets';
+import Produtos from './paginas/produtos';
 
-function App() {
+// (outras páginas vão entrar aqui depois)
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/clientes" element={<Clientes />} />
+        <Route path="/pets" element={<Pets />} />
+        <Route path="/produtos" element={<Produtos />} />
+        {/* adicionar mais rotas depois */}
+      </Routes>
+    </Router>
   );
 }
-
-export default App;
