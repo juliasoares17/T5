@@ -4,10 +4,10 @@ import { deepMerge } from './utils/deepMerge';
 const router = Router();
 
 // Simulação de banco de dados em memória para pets
-let pets = [
-  // exemplo inicial
-  { id: 1, nome: 'Rex', raca: 'Labrador', tipo: 'Cachorro', genero: 'Macho', cpfDono: '12345678900' },
-  { id: 2, nome: 'Mimi', raca: 'Siamês', tipo: 'Gato', genero: 'Fêmea', cpfDono: '09876543211' }
+export let pets = [
+  { id: 1, nome: 'Fido', tipo: 'Cachorro', raca: 'Labrador', cpfDono: '000.000.000-00' },
+  { id: 2, nome: 'Miau', tipo: 'Gato', raca: 'Siamês', cpfDono: '111.111.111-11' },
+  // ...
 ];
 
 // GET /pets - listar todos os pets

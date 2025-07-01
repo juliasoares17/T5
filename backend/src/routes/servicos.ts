@@ -4,7 +4,7 @@ import { deepMerge } from './utils/deepMerge';
 const router = Router();
 
 
-let servicos: any[] = [
+export let servicos: any[] = [
   { id: 1, nome: 'Banho e Tosa', preco: 80.00, duracao: 60 },
   { id: 2, nome: 'Consulta Veterinária', preco: 150.00, duracao: 45 }
 ];

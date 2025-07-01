@@ -3,6 +3,7 @@ export async function registrarConsumo(registro: {
   tipo: 'produto' | 'servico';
   itemId: number;
   quantidade: number;
+  idPet: number;
 }) {
   const resposta = await fetch('http://localhost:3001/clientes/registrar-consumo', {
     method: 'POST',
@@ -17,3 +18,4 @@ export async function registrarConsumo(registro: {
 
   return await resposta.json().catch(() => ({}));
 }
+

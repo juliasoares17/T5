@@ -6,8 +6,9 @@ import Home from './paginas/home';
 import Clientes from './paginas/clientes';
 import Pets from './paginas/pets';
 import Produtos from './paginas/produtos';
+import Servicos from './paginas/servicos';
+import Relatorios from './paginas/relatorios';
 
-// (outras páginas vão entrar aqui depois)
 export default function App() {
   return (
     <Router>
@@ -17,7 +18,8 @@ export default function App() {
         <Route path="/clientes" element={<Clientes />} />
         <Route path="/pets" element={<Pets />} />
         <Route path="/produtos" element={<Produtos />} />
-        {/* adicionar mais rotas depois */}
+        <Route path="/servicos" element={<Servicos />} />
+        <Route path="/relatorios" element={<Relatorios />} />
       </Routes>
     </Router>
   );

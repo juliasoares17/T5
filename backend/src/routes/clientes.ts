@@ -1,11 +1,9 @@
-// src/routes/clientes.ts
 import { Router, Request, Response } from 'express';
 import { deepMerge } from './utils/deepMerge';
 
 const router = Router();
 
-// Simulação de banco de dados em memória
-let clientes = [
+let clientes: any[] = [
   {
     id: 1,
     nome: 'Cliente A',
@@ -14,7 +12,8 @@ let clientes = [
     dataEmissaoCpf: '2020-01-01',
     rg: '',
     telefone: '',
-    email: ''
+    email: '',
+    consumos: []
   },
   {
     id: 2,
@@ -24,9 +23,12 @@ let clientes = [
     dataEmissaoCpf: '2021-05-10',
     rg: 'MG-12.345.678',
     telefone: '31999999999',
-    email: 'b@email.com'
+    email: 'b@email.com',
+    consumos: []
   }
 ];
+
+export { clientes };
 
 // GET /clientes
 router.get('/', (req: Request, res: Response) => {
@@ -42,12 +44,15 @@ router.post('/cadastrar', (req: Request, res: Response) => {
   }
 
   const novoId = clientes.length > 0 ? Math.max(...clientes.map(c => c.id)) + 1 : 1;
-  const novoCliente = { id: novoId, ...req.body };
+  const novoCliente = {
+    id: novoId,
+    ...req.body,
+    consumos: [] // ← garante que todos clientes comecem com este campo
+  };
 
   clientes.push(novoCliente);
   res.status(201).json(novoCliente);
 });
-
 
 // DELETE /clientes/excluir
 router.delete('/excluir', (req: Request, res: Response) => {
@@ -62,6 +67,7 @@ router.delete('/excluir', (req: Request, res: Response) => {
   res.status(200).json({ mensagem: 'Cliente excluído com sucesso' });
 });
 
+// PUT /clientes/atualizar
 router.put('/atualizar', (req: Request, res: Response) => {
   console.log('Rota PUT /clientes/atualizar chamada com dados:', req.body);
 
@@ -76,6 +82,35 @@ router.put('/atualizar', (req: Request, res: Response) => {
   res.status(200).json(clientes[index]);
 });
 
+// POST /clientes/registrar-consumo
+router.post('/registrar-consumo', (req: Request, res: Response) => {
+  const { idCliente, tipo, itemId, quantidade, idPet } = req.body;
+
+  const qtd = Number(quantidade);
+
+  if (!idCliente || !tipo || !itemId || !qtd || !idPet) {
+    return res.status(400).json({ erro: 'Todos os campos são obrigatórios.' });
+  }
+
+  if (!['produto', 'servico'].includes(tipo)) {
+    return res.status(400).json({ erro: 'Tipo inválido. Deve ser "produto" ou "servico".' });
+  }
+
+  if (typeof qtd !== 'number' || qtd <= 0) {
+    return res.status(400).json({ erro: 'Quantidade deve ser um número positivo.' });
+  }
+
+  const cliente = clientes.find(c => c.id === idCliente);
+  if (!cliente) {
+    return res.status(404).json({ erro: 'Cliente não encontrado.' });
+  }
+
+  cliente.consumos = cliente.consumos || [];
+  cliente.consumos.push({ tipo, itemId, quantidade, idPet });
+
+  res.status(201).json({ mensagem: 'Consumo registrado com sucesso.' });
+});
 
 export default router;
+
 

@@ -3,7 +3,7 @@ import { deepMerge } from './utils/deepMerge';
 
 const router = Router();
 
-let produtos: any[] = [
+export let produtos: any[] = [
   { id: 1, nome: 'Ração Premium', preco: 120.00 },
   { id: 2, nome: 'Brinquedo para Gato', preco: 45.50 }
 ];
